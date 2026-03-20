@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOREMOON - Strong Effects</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <style>
+        :root { --neon-red: #ff0000; }
+
+        body {
+            margin: 0; padding: 0; height: 100vh;
+            background: #000; font-family: 'Rajdhani', sans-serif;
+            overflow: hidden; display: flex; justify-content: center; align-items: center;
+            user-select: none; cursor: crosshair;
+        }
+
+        /* Particles Layer - Fixed Visibility */
+        #particles-js {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; background: radial-gradient(circle at center, #1a0505 0%, #000 100%);
+        }
+
+        #click-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100; pointer-events: none;
+        }
+
+        .container-wrapper { position: relative; z-index: 50; perspective: 2000px; }
+
+        /* Increased Block Edge Shadow & Glow */
+        .container {
+            position: relative; text-align: center;
+            padding: 50px 70px; border-radius: 40px;
+            background: rgba(10, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            /* Stronger Red Shadow Edge */
+            border: 2px solid rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4), 
+                        inset 0 0 30px rgba(255, 0, 0, 0.2),
+                        0 20px 60px rgba(0,0,0,0.8);
+            transition: transform 0.2s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .profile-box {
+            position: relative; width: 150px; height: 150px; margin: 0 auto 30px;
+            transform: translateZ(50px);
+        }
+        .profile-img-container {
+            width: 100%; height: 100%; border-radius: 50%;
+            border: 4px solid var(--neon-red); overflow: hidden;
+            box-shadow: 0 0 40px var(--neon-red);
+            animation: glowCycle 3s infinite alternate;
+            background: #fff;
+        }
+        .profile-img-container img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center 20%;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem; margin: 0; letter-spacing: 6px;
+            background: linear-gradient(to right, #fff 10%, #ff0000 50%, #fff 90%);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shineText 2s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 1));
+            transform: translateZ(80px);
+        }
+
+        .cheats-panel {
+            margin: 25px 0; padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 0, 0, 0.08); border-radius: 15px;
+            transform: translateZ(40px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .cheats-panel p { font-size: 0.9rem; color: #fff; margin: 6px 0; font-weight: 600; text-transform: uppercase; }
+        .safe-tag { color: #ff3333; font-weight: 900; text-shadow: 0 0 10px #ff0000; }
+        .price { color: #ffd700; font-size: 1.2rem; display: block; margin-top: 10px; font-weight: 800; animation: pulsePrice 1.5s infinite; }
+
+        .social-links { display: flex; justify-content: center; gap: 25px; margin-top: 35px; transform: translateZ(60px); }
+        .social-btn {
+            width: 65px; height: 65px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.8rem; text-decoration: none;
+            background: #000; border: 2px solid var(--neon-red);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(255,0,0,0.3);
+        }
+        .social-btn:hover {
+            transform: scale(1.3) translateY(-10px);
+            background: var(--neon-red); box-shadow: 0 0 40px var(--neon-red);
+        }
+
+        @keyframes shineText { to { background-position: 200% center; } }
+        @keyframes glowCycle { 0% { box-shadow: 0 0 20px #ff0000; border-color: #ff0000; } 100% { box-shadow: 0 0 50px #ff0000, 0 0 15px #fff; border-color: #fff; } }
+        @keyframes pulsePrice { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); text-shadow: 0 0 15px #ffd700; } }
+
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+<canvas id="click-canvas"></canvas>
+
+<div class="container-wrapper" id="scene">
+    <div class="container" id="card">
+        <div class="profile-box">
+            <div class="profile-img-container">
+                <img src="https://i.imgur.com/eHwFhLg.png" alt="Cool Anya">
+            </div>
+        </div>
+
+        <h1>DOREMOON 🎀</h1>
+
+        <div class="cheats-panel">
+            <p>SAFE CHEATS AVAILABLE RIGHT NOW</p>
+            <p>• AIMBOT EXTERNAL <span class="safe-tag">1000% SAFE</span></p>
+            <p>• VISUAL LOCATION <span class="safe-tag">1000% SAFE</span></p>
+            <span class="price">✨ AT LOWEST PRICE ✨</span>
+        </div>
+
+        <div class="social-links">
+            <a href="https://youtube.com/@faircheats" target="_blank" class="social-btn"><i class="fab fa-youtube"></i></a>
+            <a href="https://t.me/faircheats77" target="_blank" class="social-btn"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://discord.gg/DCMFVasMfZ" target="_blank" class="social-btn"><i class="fab fa-discord"></i></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. FIXED Particles Setup
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": ["#ff0000", "#ffffff"] },
+            "opacity": { "value": 0.6, "random": true },
+            "size": { "value": 3, "random": true },
+            "line_linked": { "enable": true, "distance": 150, "color": "#ff0000", "opacity": 0.3, "width": 1 },
+            "move": { "enable": true, "speed": 4, "direction": "none", "random": true, "out_mode": "out" }
+        },
+        "interactivity": {
+            "events": { "onhover": { "enable": true, "mode": "grab" } }
+        }
+    });
+
+    // 2. Subtle Tilt
+    const card = document.getElementById('card');
+    window.addEventListener('mousemove', (e) => {
+        let xAxis = (window.innerWidth / 2 - e.pageX) / 50; 
+        let yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+        card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+
+    // 3. STRONG Click Burst Effect
+    const canvas = document.getElementById('click-canvas');
+    const ctx = canvas.getContext('2d');
+    let pArray = [];
+
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x; this.y = y;
+            this.size = Math.random() * 6 + 2; // Bigger particles
+            this.speedX = (Math.random() - 0.5) * 12; // Faster burst
+            this.speedY = (Math.random() - 0.5) * 12;
+            this.color = Math.random() > 0.4 ? '#ff0000' : '#ffffff';
+            this.glow = Math.random() > 0.5 ? 15 : 0;
+            this.opacity = 1;
+        }
+        draw() {
+            ctx.globalAlpha = this.opacity;
+            ctx.shadowBlur = this.glow;
+            ctx.shadowColor = this.color;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        update() {
+            this.x += this.speedX; this.y += this.speedY;
+            this.opacity -= 0.015; // Slower fade
+            if (this.size > 0.1) this.size -= 0.1;
+        }
+    }
+
+    window.addEventListener('mousedown', (e) => {
+        // More particles for "stronger" effect
+        for (let i = 0; i < 25; i++) { pArray.push(new Particle(e.x, e.y)); }
+    });
+
+    function handleParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < pArray.length; i++) {
+            pArray[i].update(); pArray[i].draw();
+            if (pArray[i].opacity <= 0) { pArray.splice(i, 1); i--; }
+        }
+        requestAnimationFrame(handleParticles);
+    }
+    handleParticles();
+</script>
+
+</body>
+</html>
